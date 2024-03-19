@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit} from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "@/components/mode-toggle";
+import { Providers } from "@/providers";
+import { Header } from "@/components/header";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pair Devs - Find your pair programming partner",
@@ -18,13 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider defaultTheme="system" attribute="class">
-          <div>
-            <ModeToggle />
-          </div>
+      <body className={outfit.className}>
+        <Providers>
+          <Header />
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -4,8 +4,10 @@ import {
   text,
   primaryKey,
   integer,
+  uuid,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "@auth/core/adapters";
+import { sql } from "drizzle-orm";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -59,17 +61,18 @@ export const verificationTokens = pgTable(
   })
 );
 
-// delete later
-export const testing = pgTable("testing", {
-    id: text("id").notNull().primaryKey(),
-    name: text("name").notNull().unique(),
-})
 
 // Pair Dev Schema
 export const room = pgTable("room", {
+  id: uuid("id")
+  .default(sql`gen_random_uuid()`)
+  .notNull()
+  .primaryKey(),
   userId: text("userId").notNull().notNull().references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description").notNull(),
   language: text("language").notNull(),
   gitUrl: text("gitUrl").notNull(),
 })
+
+export type Room = typeof room.$inferSelect;

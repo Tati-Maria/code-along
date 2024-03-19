@@ -11,10 +11,10 @@ export function Logo (){
         <Image
           src={"/pair-dev.svg"}
           alt="Pair Dev Logo"
-          width={50}
-          height={50}
+          width={45}
+          height={45}
         />
-        <strong className={cn("text-xl md:text-2xl hidden sm:block", youngSerif.className)}>
+        <strong className={cn("text-xl md:text-2xl hidden sm:block w-auto h-auto", youngSerif.className)}>
           Pair Devs
         </strong>
       </Link>

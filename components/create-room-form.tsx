@@ -16,8 +16,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Room, roomSchema } from "@/lib/validation/room";
+import { createRoomAction } from "@/actions";
+import {  useRouter } from "next/navigation";
 
 export function CreateRoomForm() {
+  const router = useRouter();
   const form = useForm<Room>({
     resolver: zodResolver(roomSchema),
     defaultValues: {
@@ -28,13 +31,15 @@ export function CreateRoomForm() {
     },
   });
 
-  function handleSubmit(data: Room) {
+  async function handleSubmit(data: Room) {
     console.log(data);
+    await createRoomAction(data);
+    router.push("/rooms");
   }
 
   return (
     <Form {...form}>
-      <form className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="name"
@@ -77,7 +82,7 @@ export function CreateRoomForm() {
         />
         <FormField
           control={form.control}
-          name="name"
+          name="gitUrl"
           render={({ field, formState }) => (
             <FormItem>
               <FormLabel htmlFor={field.name}>

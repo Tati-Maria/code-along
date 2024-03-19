@@ -14,14 +14,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Icons } from "./icons";
+import { cn } from "@/lib/utils";
 
 export function UserNav() {
   const session = useSession();
+  const noSession = session.status === "unauthenticated" || session.status === "loading";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button
+          variant={noSession ? "secondary" : "ghost"}
+          className={cn("relative h-8 w-8 rounded-full", noSession && "rounded-md h-auto w-auto")}
+        >
           {session.status === "loading" ? (
             <Icons.loading className="animate-spin h-4 w-4" />
           ) : session.data?.user ? (

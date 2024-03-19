@@ -8,7 +8,7 @@ import { buttonVariants } from "./ui/button";
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between ">
+    <header className="flex items-center justify-between border-b pb-4 border-muted">
       <Logo />
       <nav className="flex space-x-6 items-center">
         <Link

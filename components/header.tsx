@@ -1,24 +1,31 @@
-"use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
 import { ModeToggle } from "./mode-toggle";
-import { Button } from "./ui/button";
+import { Logo } from "./common/logo";
+import { UserNav } from "./common/user-nav";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "./ui/button";
 
 export function Header() {
-  const session = useSession();
-
   return (
-    <header>
-      <div>
-        {session.data ? (
-          <Button onClick={() => signOut()}>Sign Out</Button>
-        ) : (
-          <Button
-          onClick={() => signIn("github")}
-          >
-            Sign In
-          </Button>
-        )}
+    <header className="flex items-center justify-between ">
+      <Logo />
+      <nav className="flex space-x-6 items-center">
+        <Link
+          className={cn(buttonVariants({ variant: "link" }))}
+          href={"/create-room"}
+        >
+          Create Room
+        </Link>
+        <Link
+          className={cn(buttonVariants({ variant: "link" }))}
+          href={"/rooms"}
+        >
+          Rooms
+        </Link>
+      </nav>
+      <div className="flex items-center space-x-6">
+        <UserNav />
         <ModeToggle />
       </div>
     </header>

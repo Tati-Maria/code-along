@@ -3,6 +3,8 @@ import { Outfit} from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/providers";
 import { Header } from "@/components/header";
+import { Container } from "@/components/common/container";
+import { Footer } from "@/components/footer";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -20,8 +22,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={outfit.className}>
         <Providers>
-          <Header />
-          {children}
+          <Container>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </Container>
         </Providers>
       </body>
     </html>

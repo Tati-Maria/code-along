@@ -65,3 +65,11 @@ export const testing = pgTable("testing", {
     name: text("name").notNull().unique(),
 })
 
+// Pair Dev Schema
+export const room = pgTable("room", {
+  userId: text("userId").notNull().notNull().references(() => users.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  language: text("language").notNull(),
+  gitUrl: text("gitUrl").notNull(),
+})

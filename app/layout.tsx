@@ -5,6 +5,8 @@ import { Providers } from "@/providers";
 import { Header } from "@/components/header";
 import { Container } from "@/components/common/container";
 import { Footer } from "@/components/footer";
+import NextTopLoader from "nextjs-toploader";
+
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -23,6 +25,7 @@ export default function RootLayout({
       <body className={outfit.className}>
         <Providers>
           <Container>
+            <NextTopLoader />
             <Header />
             <main className="min-h-screen">{children}</main>
             <Footer />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit} from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { Providers } from "@/providers";
 import { Header } from "@/components/header";
@@ -30,6 +31,7 @@ export default function RootLayout({
             <main className="h-full">{children}</main>
             <Footer />
           </Container>
+          <Toaster />
         </Providers>
       </body>
     </html>

@@ -1,5 +1,5 @@
 import { EmptyState } from "@/components/common/empty-state";
-import { RoomCard } from "@/components/common/room-card";
+import { UserRoomCard } from "@/components/common/user-room-card";
 import { getUserRooms } from "@/data-access/room";
 
 export default async function YourRoomsPage() {
@@ -14,7 +14,7 @@ export default async function YourRoomsPage() {
         ) : (
           rooms.map((room) => (
             <li key={room.id}>
-              <RoomCard room={room} />
+              <UserRoomCard room={room} />
             </li>
           ))
         )}

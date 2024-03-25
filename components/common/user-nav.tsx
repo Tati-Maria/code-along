@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Icons } from "./icons";
 import { cn } from "@/lib/utils";
+import { User2 } from "lucide-react";
 
 export function UserNav() {
   const session = useSession();
@@ -27,15 +28,13 @@ export function UserNav() {
           variant={noSession ? "secondary" : "ghost"}
           className={cn("relative h-8 w-8 rounded-full", noSession && "rounded-md h-auto w-auto")}
         >
-          {session.status === "loading" ? (
-            <Icons.loading className="animate-spin h-4 w-4" />
-          ) : session.data?.user ? (
-            <UserAvatar
-              src={session.data.user.image as string}
-              name={session.data.user.name as string}
-            />
+          {noSession ? (
+            <User2 className="h-5 w-5" />
           ) : (
-            !session.data && "Sign in"
+            <UserAvatar
+              src={session.data?.user?.image as string}
+              name={session.data?.user?.name as string}
+            />
           )}
         </Button>
       </DropdownMenuTrigger>

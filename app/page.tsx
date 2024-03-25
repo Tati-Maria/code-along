@@ -9,7 +9,7 @@ export default function Home() {
         Welcome to <span className="text-sky-500">Pair Devs</span>
       </h1>
       <p className="font-extralight text-base sm:text-lg md:text-xl lg:max-w-lg">
-        Pair Dev is a platform that connects developers with other developers to
+        Pair Devs is a platform that connects developers with other developers to
         work on projects together.
       </p>
       <div className="flex items-center space-x-6">

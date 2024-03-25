@@ -1,10 +1,9 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { Adapter } from "next-auth/adapters";
-import NextAuth from "next-auth/next";
-import { AuthOptions, DefaultSession, getServerSession } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import Github from "next-auth/providers/github";
 import { db } from "@/db";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { AuthOptions, DefaultSession, getServerSession } from "next-auth";
+import { Adapter } from "next-auth/adapters";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -14,20 +13,20 @@ declare module "next-auth" {
   }
 }
 
-export const handler = {
+export const authConfig = {
   adapter: DrizzleAdapter(db) as Adapter,
   session: {
     strategy: "jwt",
   },
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    Github({
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    })
   ],
   callbacks: {
     async jwt({ token, user }) {
@@ -58,9 +57,9 @@ export const handler = {
 
       return session;
     },
-  }
+  },
 } satisfies AuthOptions;
 
 export function getSession() {
-  return getServerSession(handler);
+  return getServerSession(authConfig);
 }

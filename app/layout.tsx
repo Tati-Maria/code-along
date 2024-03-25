@@ -27,7 +27,7 @@ export default function RootLayout({
           <Container>
             <NextTopLoader />
             <Header />
-            <main className="min-h-screen">{children}</main>
+            <main className="h-full">{children}</main>
             <Footer />
           </Container>
         </Providers>

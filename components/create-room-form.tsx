@@ -3,6 +3,7 @@
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,10 +27,12 @@ export function CreateRoomForm() {
     defaultValues: {
       name: "",
       description: "",
-      language: "",
+      tags: "",
       gitUrl: "",
     },
   });
+  const minLength = 10;
+  const maxLength = 500;
 
   async function handleSubmit(data: Room) {
     console.log(data);
@@ -62,20 +65,23 @@ export function CreateRoomForm() {
 
         <FormField
           control={form.control}
-          name="language"
+          name="tags"
           render={({ field, formState }) => (
             <FormItem>
               <FormLabel htmlFor={field.name}>
-                Primary Programming Language{" "}
+                Tags{" "}
                 <span className="text-red-500 text-xs ">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Eg. JavaScript"
+                  placeholder="Eg. JavaScript, Python, Java, etc."
                   disabled={formState.isSubmitting}
                 />
               </FormControl>
+              <FormDescription>
+                Separate multiple tags with commas
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -95,6 +101,9 @@ export function CreateRoomForm() {
                   disabled={formState.isSubmitting}
                 />
               </FormControl>
+              <FormDescription>
+                Please provide a valid github repository URL
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -111,11 +120,15 @@ export function CreateRoomForm() {
                 <Textarea
                   disabled={formState.isSubmitting}
                   {...field}
-                  placeholder="what is this room about?"
-                  maxLength={1000}
+                  placeholder="Your project description goes here."
+                  maxLength={600}
                   minLength={10}
                 />
               </FormControl>
+              <FormDescription>
+                {form.getValues("description").length}/{maxLength}{" "}
+                characters
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

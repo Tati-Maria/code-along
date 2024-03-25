@@ -19,16 +19,28 @@ interface RoomCardProps {
 
 
 export function RoomCard ({room}: RoomCardProps) {
+    const shortenDescription = (description: string) => {
+        return description.length > 100
+            ? `${description.slice(0, 100)}...`
+            : description;
+    };
+
+    const languages = room.language.split(',').map((lang) => lang.trim());
+
     return (
-      <Card>
+      <Card className="w-[350px]">
         <CardHeader>
           <CardTitle>{room.name}</CardTitle>
           <CardDescription>
-            {room.description || "No description provided"}
+            {shortenDescription(room.description) || "No description provided"}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Badge>{room.language}</Badge>
+          <div className="flex flex-wrap space-x-2">
+            {languages.map((lang) => (
+              <Badge key={lang}>{lang}</Badge>
+            ))}
+          </div>
         </CardContent>
         <CardFooter>
           <Button

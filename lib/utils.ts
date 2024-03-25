@@ -10,7 +10,7 @@ export function splitTags(tags: string) {
 }
 
 export function shortenDescription(description: string) {
-  return description.length > 100
-    ? `${description.slice(0, 100)}...`
+  return description.length > 200
+    ? `${description.slice(0, 200)}...`
     : description;
 }

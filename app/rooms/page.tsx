@@ -14,11 +14,14 @@ export default async function RoomsPage({searchParams}: {searchParams: {search: 
       <h1 className="font-semibold text-2xl">Rooms</h1>
       <SearchBar />
       <ul className="grid grid-cols-1 h-full sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {rooms.map((room) => (
-            <li key={room.id}>
-              <RoomCard room={room} />
-            </li>
-          ))}
+        {rooms.length === 0 ? (
+          <EmptyState 
+          className="col-span-3"
+          text="No rooms found"
+          />
+        ) : (
+          rooms.map((room) => <RoomCard key={room.id} room={room} />)
+        )}
       </ul>
     </section>
   );

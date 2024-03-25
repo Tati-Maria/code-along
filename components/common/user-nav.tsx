@@ -8,12 +8,8 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Icons } from "./icons";
 import { cn } from "@/lib/utils";
 import { User2 } from "lucide-react";
 
@@ -44,7 +40,7 @@ export function UserNav() {
             <>
               <DropdownMenuItem
                 onClick={() => {
-                  signOut();
+                  signOut({ callbackUrl: "/"});
                 }}
               >
                 Sign out
@@ -55,7 +51,7 @@ export function UserNav() {
             <>
               <DropdownMenuItem
                 onClick={() => {
-                  signIn("github");
+                  signIn("github", { callbackUrl: "/" });
                 }}
               >
                 Sign in with GitHub

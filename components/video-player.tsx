@@ -4,6 +4,7 @@ import { Room } from "@/db/schema";
 import {
   Call,
   CallControls,
+  CallParticipantsList,
   SpeakerLayout,
   StreamCall,
   StreamTheme,
@@ -13,6 +14,7 @@ import {
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { generateTokenAction } from "@/actions/generate-token";
+import { useRouter } from "next/navigation";
 
 const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY as string;
 
@@ -20,6 +22,7 @@ export function PairVideoPlayer({room}: {room: Room}) {
   const session = useSession();
   const [client, setClient] = useState<StreamVideoClient | null>();
   const [call, setCall] = useState<Call | null>();
+  const router = useRouter();
 
   useEffect(() => {
     if(!room) {
@@ -33,6 +36,8 @@ export function PairVideoPlayer({room}: {room: Room}) {
       apiKey,
       user: {
         id: userId,
+        name: session.data.user.name || "Unknown",
+        image: session.data.user.image as string,
       },
       tokenProvider: () => generateTokenAction(),
     });
@@ -41,9 +46,11 @@ export function PairVideoPlayer({room}: {room: Room}) {
     call.join({ create: true });
     setCall(call);
 
+    // Cleanup
     return () => {
-      call.leave();
-      client.disconnectUser();
+      call.leave().then(() => {
+        client.disconnectUser();
+      }).catch(console.error);
     };
   }, [session, room]);
 
@@ -54,7 +61,12 @@ export function PairVideoPlayer({room}: {room: Room}) {
         <StreamTheme>
           <StreamCall call={call}>
             <SpeakerLayout />
-            <CallControls />
+            <CallControls 
+            onLeave={() => router.push("/")}
+            />
+            <CallParticipantsList 
+            onClose={() => undefined}
+            />
           </StreamCall>
         </StreamTheme>
       </StreamVideo>

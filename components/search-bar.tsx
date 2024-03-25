@@ -7,6 +7,7 @@ import { Search, searchSchema } from "@/lib/validation/search";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export function SearchBar() {
   const router = useRouter();
@@ -17,6 +18,10 @@ export function SearchBar() {
       search: qurey.get("search") ?? "",
     },
   });
+
+  useEffect(() => {
+    form.setValue("search", qurey.get("search") ?? "");
+  }, [qurey.get("search")]);
 
   const onSubmit = (data: Search) => {
     if (data.search) {
@@ -50,7 +55,7 @@ export function SearchBar() {
         <Button type="submit">Search</Button>
         {qurey.get("search") && (
             <Button
-            variant={"ghost"}
+            variant={"link"}
             onClick={() => {
                 form.setValue("search", "");
                 router.push("/rooms");

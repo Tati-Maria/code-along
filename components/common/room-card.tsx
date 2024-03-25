@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { TagsList } from "./tags-list";
+import { shortenDescription } from "@/lib/utils";
 
 
 interface RoomCardProps {
@@ -19,11 +20,6 @@ interface RoomCardProps {
 
 
 export function RoomCard ({room}: RoomCardProps) {
-    const shortenDescription = (description: string) => {
-        return description.length > 100
-            ? `${description.slice(0, 100)}...`
-            : description;
-    };
 
     return (
       <Card className="w-[350px]">

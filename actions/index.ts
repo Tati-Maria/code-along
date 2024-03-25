@@ -1,6 +1,7 @@
 'use server';
 
-import { createRoom, editRoom, getRoom } from "@/data-access/room";
+import { createRoom, deleteRoom, editRoom, getRoom } from "@/data-access/room";
+import { deleteUser } from "@/data-access/users";
 import { Room} from "@/db/schema";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
@@ -36,4 +37,32 @@ export async function editRoomAction(roomData: Omit<Room, "userId">) {
   revalidatePath("/your-rooms");
   revalidatePath(`/edit-room/${roomData.id}`);
   redirect("/your-rooms");
+}
+
+export async function deleteRoomAction(roomId: string) {
+  const session = await getSession();
+
+  if(!session) {
+    throw new Error("You must be logged in to delete a room");
+  }
+
+  const room = await getRoom(roomId);
+
+  if(room?.userId !== session.user.id) {
+    throw new Error("User not authorized");
+  }
+
+  await deleteRoom(roomId);
+  revalidatePath("/your-rooms");
+  redirect("/your-rooms");
+}
+
+export async function deleteAccountAction() {
+  const session = await getSession();
+
+  if(!session) {
+    throw new Error("You must be logged in to delete your account");
+  }
+
+  await deleteUser(session.user.id);
 }

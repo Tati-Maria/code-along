@@ -31,8 +31,8 @@ export default function RootLayout({
             <main className="h-full">{children}</main>
             <Footer />
           </Container>
-          <Toaster />
         </Providers>
+        <Toaster />
       </body>
     </html>
   );

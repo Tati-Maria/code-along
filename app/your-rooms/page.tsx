@@ -1,8 +1,10 @@
 import { EmptyState } from "@/components/common/empty-state";
 import { UserRoomCard } from "@/components/common/user-room-card";
 import { getUserRooms } from "@/data-access/room";
+import { unstable_noStore } from "next/cache";
 
 export default async function YourRoomsPage() {
+  unstable_noStore();
   const rooms = await getUserRooms();
 
   return (

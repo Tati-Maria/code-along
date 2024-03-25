@@ -13,17 +13,24 @@ import {
 import { cn } from "@/lib/utils";
 import { User2 } from "lucide-react";
 import Link from "next/link";
+import { deleteAccountAction } from "@/actions";
+import { useRouter } from "next/navigation";
 
 export function UserNav() {
   const session = useSession();
-  const noSession = session.status === "unauthenticated" || session.status === "loading";
+  const router = useRouter();
+  const noSession =
+    session.status === "unauthenticated" || session.status === "loading";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant={noSession ? "secondary" : "ghost"}
-          className={cn("relative h-8 w-8 rounded-full", noSession && "rounded-md h-auto w-auto")}
+          className={cn(
+            "relative h-8 w-8 rounded-full",
+            noSession && "rounded-md h-auto w-auto"
+          )}
         >
           {noSession ? (
             <User2 className="h-5 w-5" />
@@ -39,17 +46,24 @@ export function UserNav() {
         <DropdownMenuGroup>
           {session.data?.user ? (
             <>
-            <DropdownMenuItem>
-              <Link href={"/your-rooms"}>Your rooms</Link>
-            </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={"/your-rooms"}>Your rooms</Link>
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
-                  signOut({ callbackUrl: "/"});
+                  signOut({ callbackUrl: "/" });
                 }}
               >
                 Sign out
               </DropdownMenuItem>
-              <DropdownMenuItem>Delete account</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  deleteAccountAction();
+                  router.push("/");
+                }}
+              >
+                Delete account
+              </DropdownMenuItem>
             </>
           ) : (
             <>

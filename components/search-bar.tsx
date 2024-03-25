@@ -11,17 +11,17 @@ import { useEffect } from "react";
 
 export function SearchBar() {
   const router = useRouter();
-  const qurey = useSearchParams();
+  const query = useSearchParams();
   const form = useForm<Search>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
-      search: qurey.get("search") ?? "",
+      search: query.get("search") ?? "",
     },
   });
 
   useEffect(() => {
-    form.setValue("search", qurey.get("search") ?? "");
-  }, [qurey.get("search")]);
+    form.setValue("search", query.get("search") ?? "");
+  }, [query.get("search")]);
 
   const onSubmit = (data: Search) => {
     if (data.search) {
@@ -53,7 +53,7 @@ export function SearchBar() {
           )}
         />
         <Button type="submit">Search</Button>
-        {qurey.get("search") && (
+        {query.get("search") && (
             <Button
             variant={"link"}
             onClick={() => {

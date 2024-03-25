@@ -19,6 +19,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Room, roomSchema } from "@/lib/validation/room";
 import { createRoomAction } from "@/actions";
 import {  useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function CreateRoomForm() {
   const router = useRouter();
@@ -35,8 +36,8 @@ export function CreateRoomForm() {
   const maxLength = 500;
 
   async function handleSubmit(data: Room) {
-    console.log(data);
     await createRoomAction(data);
+    toast.success("Room created successfully");
     router.push("/rooms");
   }
 

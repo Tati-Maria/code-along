@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { User2 } from "lucide-react";
+import Link from "next/link";
 
 export function UserNav() {
   const session = useSession();
@@ -38,6 +39,9 @@ export function UserNav() {
         <DropdownMenuGroup>
           {session.data?.user ? (
             <>
+            <DropdownMenuItem>
+              <Link href={"/your-rooms"}>Your rooms</Link>
+            </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   signOut({ callbackUrl: "/"});

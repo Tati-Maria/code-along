@@ -1,3 +1,4 @@
+import { TagsList } from "@/components/common/tags-list";
 import { Badge } from "@/components/ui/badge";
 import { getRoom } from "@/data-access/room"
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
@@ -16,8 +17,6 @@ export default async function RoomsSinglePage({ params: {roomId}}: RoomPageProps
     if(!room) {
         return <div>Room not found</div>
     }
-
-    const tags = room?.tags.split(',').map((tag) => tag.trim());
     
     return (
       <section className="mt-16 h-full">
@@ -28,13 +27,7 @@ export default async function RoomsSinglePage({ params: {roomId}}: RoomPageProps
           <div className="col-span-1 space-y-3 font-light px-3 py-2">
             <h1 className="text-xl font-medium">{room?.name}</h1>
             <p>{room?.description}</p>
-            <div className="flex flex-wrap space-x-2">
-              {tags?.map((tag) => (
-                <Badge  key={tag}>
-                    {tag}
-                </Badge>
-              ))}
-            </div>
+            <TagsList tags={room.tags} />
             <p>
                 Host name: Nahary
             </p>
